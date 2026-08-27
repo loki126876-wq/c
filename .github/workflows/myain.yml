@@ -1,4 +1,4 @@
-name: Brody 6H Crack Engine
+name: BrH No-Root
 on:
   workflow_dispatch:
   schedule:
@@ -7,7 +7,7 @@ on:
 jobs:
   crack:
     runs-on: ubuntu-latest
-    timeout-minutes: 360   # ۶ ساعت دقیقاً
+    timeout-minutes: 360
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,16 +17,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install System Tools
-        run: |
-          sudo apt update
-          sudo apt install -y nmap masscan hydra sshpass
-
       - name: Install Python Libs
         run: |
-          pip install requests paramiko pymysql
+          pip install requests paramiko pymysql ftplib
 
-      - name: Run Brody 6H Loop
+      - name: Run Brody
         run: python3 brody_actions.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
