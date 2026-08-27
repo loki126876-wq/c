@@ -1,0 +1,33 @@
+name: Brody Multi-Engine Cracker
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */5 * * *'   # هر ۵ ساعت
+
+jobs:
+  crack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300    # ۵ ساعت
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system deps
+        run: |
+          sudo apt update
+          sudo apt install -y nmap masscan hydra sshpass
+
+      - name: Install Python deps
+        run: |
+          pip install requests paramiko pymysql asyncio
+
+      - name: Run Brody Engine
+        run: python3 brody_actions.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
