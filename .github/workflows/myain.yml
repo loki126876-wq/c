@@ -27,7 +27,7 @@ jobs:
           pip install requests paramiko pymysql
 
       - name: Run Brody 6H Loop
-        run: python3 brody_6h.py
+        run: python3 brody_actions.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
